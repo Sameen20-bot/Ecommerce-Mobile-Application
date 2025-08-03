@@ -1,3 +1,6 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/no-unstable-nested-components */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -5,62 +8,273 @@
  * @format
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+import CartScreen from './src/Screens/CartScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import UserScreen from './src/Screens/UserScreen';
+import ProductScreen from './src/Screens/ProductScreen';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import ContactUsScreen from './src/Screens/ContactUsScreen';
+import SettingScreen from './src/Screens/SettingScreen';
+import UploadScreen from './src/Screens/UploadScreen';
+import ProfileEditScreen from './src/Screens/ProfileEditScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Icons from 'react-native-vector-icons/MaterialIcons';
+import {Text, View} from 'react-native';
 import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
+import AnimationScreen from './src/Screens/AnimationScreen';
+import AnimationScreen2 from './src/AnimationsPractice/AnimationScreen2';
+import AnimationScreen3 from './src/AnimationsPractice/AnimationScreen3';
+import AnimationScreen4 from './src/AnimationsPractice/AnimationScreen4';
+import AnimationScreen5 from './src/AnimationsPractice/AnimationScreen5';
+import AnimationScreen6 from './src/AnimationsPractice/AnimationScreen6';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// import UserScreen from './src/Screens/UserScreen';
+// import ProductsScreen from './src/Screens/ProductsScreen';
+// import ProductScreen from './src/Screens/ProductScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+// const TopTab = createMaterialTopTabNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+// function ProductTopTabs() {
+//   return (
+//     <TopTab.Navigator>
+//       <TopTab.Screen name="Product" component={ProductScreen} />
+//       <TopTab.Screen name="Cart" component={CartScreen} />
+//       <TopTab.Screen name="User" component={UserScreen} />
+//     </TopTab.Navigator>
+//   );
+// }
+
+function MyTabs() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: hp(8),
+          padding: hp(2),
+          backgroundColor: '#fff',
+          elevation: 10,
+          borderTopWidth: 1,
+        },
+      }}>
+      {/* <Tab.Screen name="Home" component={ProductTopTabs} /> */}
+      <Tab.Screen
+        name="Product"
+        component={ProductScreen}
+        options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Icons
+                name="home"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
           },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
+          tabBarLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Home'}
+              </Text>
+            );
           },
-        ]}>
-        {children}
-      </Text>
-    </View>
+        }}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{
+          tabBarIcon: () => {
+            return (
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#f83758',
+                  padding: hp(1),
+                  borderRadius: hp(40),
+                  marginTop: -hp(2),
+                  elevation: 5,
+                  width: wp(17),
+                  height: hp(8),
+                }}>
+                <Icons name="shopping-cart" size={30} color="#fff" />
+              </View>
+            );
+          },
+          tabBarLabel: () => null,
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingScreen}
+        options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Icons
+                name="settings"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          tabBarLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Settings'}
+              </Text>
+            );
+          },
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          width: 280,
+        },
+        drawerActiveBackgroundColor: '#FEC5F6',
+        drawerPosition: 'left',
+        headerShown: false,
+      }}>
+      <Drawer.Screen
+        name="Home"
+        component={MyTabs}
+        options={{
+          drawerIcon: ({focused}) => {
+            return (
+              <Icons
+                name="home"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          drawerLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Home'}
+              </Text>
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Gift Cards"
+        component={AnimationScreen6} 
+        options={{
+          drawerIcon: ({focused}) => {
+            return (
+              <Icons
+                name="card-giftcard"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          drawerLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Gift Cards'}
+              </Text>
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Contact Us"
+        component={ContactUsScreen}
+        options={{
+          drawerIcon: ({focused}) => {
+            return (
+              <Icons
+                name="call"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          drawerLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Contact Us'}
+              </Text>
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={SettingScreen}
+        options={{
+          drawerIcon: ({focused}) => {
+            return (
+              <Icons
+                name="settings"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          drawerLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Settings'}
+              </Text>
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Log Out"
+        component={UserScreen}
+        options={{
+          drawerIcon: ({focused}) => {
+            return (
+              <Icons
+                name="logout"
+                size={30}
+                style={{color: focused ? '#f83758' : 'black'}}
+              />
+            );
+          },
+          drawerLabel: ({focused}) => {
+            return (
+              <Text
+                style={{color: focused ? '#f83758' : 'black', fontSize: 18}}>
+                {'Log Out'}
+              </Text>
+            );
+          },
+        }}
+      />
+    </Drawer.Navigator>
   );
 }
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   /*
    * To keep the template simple and small we're adding padding to prevent view
    * from rendering under the System UI.
@@ -70,62 +284,28 @@ function App(): React.JSX.Element {
    * You can read more about it here:
    * https://github.com/react-native-community/discussions-and-proposals/discussions/827
    */
-  const safePadding = '5%';
 
   return (
-    <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
-        </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </View>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName="Drawer">
+          <Stack.Screen name="Drawer" component={DrawerNavigator} />
+          <Stack.Screen name="UploadScreen" component={UploadScreen} />
+          <Stack.Screen
+            name="ProfileEditScreen"
+            component={ProfileEditScreen}
+          />
+          <Stack.Screen
+            name="ProductDetailsScreen"
+            component={ProductDetailsScreen}
+          />
+          {/* Add other screens here if needed */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Avenue de Madison.ttf",
+      "sha1": "5a0a33e52961113449fe657f6c4cad6b1f416323"
+    },
+    {
+      "path": "src/assets/fonts/OFL.txt",
+      "sha1": "d32dec7b71d75de31f40714453ef322f44ae6a88"
+    },
+    {
+      "path": "src/assets/fonts/PlaywriteAUQLD-ExtraLight.ttf",
+      "sha1": "548fa5a031e6e7f898762c2a28d89e117a628e34"
+    },
+    {
+      "path": "src/assets/fonts/PlaywriteAUQLD-Light.ttf",
+      "sha1": "1bce3727fc575ffaad5633c79697cb27f94f8128"
+    },
+    {
+      "path": "src/assets/fonts/PlaywriteAUQLD-VariableFont_wght.ttf",
+      "sha1": "cf83713f7c1bc3ac81513ce9312352c3c32c9392"
+    },
+    {
+      "path": "src/assets/fonts/PlaywriteAUQLDRegular.ttf",
+      "sha1": "1f6d74f560d370bf50700226766b21c7f9e9a148"
+    },
+    {
+      "path": "src/assets/fonts/PlaywriteAUQLDThin.ttf",
+      "sha1": "d70f68bfa4833a2e0f0414187098f1bbd98a94e5"
+    },
+    {
+      "path": "src/assets/fonts/README.txt",
+      "sha1": "56ebe8fb7a614cb390fd8836860a9c5013ccf7f4"
+    }
+  ]
+}

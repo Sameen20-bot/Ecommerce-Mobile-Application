@@ -1,0 +1,18 @@
+For creating an app:
+npx @react-native-community/cli@latest init AwesomeProject
+
+
+For run:
+npx react-native run-android
+
+safe area view/provider apply(comp), modal outside click close, profile edit page (h.w)
+
+
+task: 
+1. gallery view (completed)
+2. image array
+3. designing of upload page/setting page (first this)
+
+contact page and use it through component
+
+https://fakestoreapi.com/docs
