@@ -95,3 +95,7 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+=======
+# Ecommerce-Mobile-Application
+A cross-platform E-Commerce app built with React Native. Features include product listing, detail view, cart, and user auth (in progress). Designed to deliver a real-world shopping experience. Project is currently under development.
+>>>>>>> 3318480420ca17d4574fe7cb35d88881718ec2c0
