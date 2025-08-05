@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {StarRatingDisplay} from 'react-native-star-rating-widget';
 import {
@@ -13,6 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: {
@@ -118,14 +121,6 @@ const styles = StyleSheet.create({
     marginVertical: hp(2),
     justifyContent: 'space-between',
   },
-  cartButton: {
-    flex: 1,
-    marginRight: wp(2),
-    backgroundColor: '#fa7189',
-    padding: hp(1.5),
-    borderRadius: 10,
-    alignItems: 'center',
-  },
   buyButton: {
     flex: 1,
     backgroundColor: '#eb3030',
@@ -210,12 +205,94 @@ const styles = StyleSheet.create({
     fontSize: hp(3.0),
     fontWeight: 'bold',
   },
+  addView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: hp(3),
+    marginHorizontal: wp(1),
+  },
+  viewText: {
+    alignItems: 'center',
+  },
+  addText: {
+    height: hp(5),
+    width: wp(13),
+    textAlign: 'center',
+    borderColor: '#e91e63',
+    borderWidth: hp(0.5),
+    color: 'black',
+    fontSize: hp(2.6),
+    fontWeight: '500',
+    // padding: hp(2),
+  },
+  buttonView: {
+    marginHorizontal: wp(9),
+    flexDirection: 'row',
+    gap: hp(1),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btn1: {
+    height: hp(6),
+    width: wp(12),
+    textAlign: 'center',
+    fontSize: hp(4),
+    borderRadius: hp(10),
+    backgroundColor: '#e91e63',
+    color: 'white',
+    // padding: hp(3),
+  },
+  btn2: {
+    height: hp(6),
+    width: wp(12),
+    textAlign: 'center',
+    fontSize: hp(4),
+    borderRadius: hp(10),
+    backgroundColor: '#e91e63',
+    color: 'white',
+  },
 });
 
 export default function ProductDetailsScreen({route}) {
   const {product, data} = route.params;
   const [selectedSize, setSelectedSize] = useState('XXL');
   const navigation = useNavigation();
+  const [add, setAdd] = useState(1);
+
+  const datas = {
+    image: product.image,
+    title: product.title,
+    price: product.price,
+    quantity: add,
+    size: selectedSize,
+  };
+
+  const addToCart = async () => {
+    try {
+      const existing = await AsyncStorage.getItem('user-products');
+      let cart = existing ? JSON.parse(existing) : [];
+      console.log('product adding', datas);
+      cart.push(datas);
+      await AsyncStorage.setItem('user-products', JSON.stringify(cart));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // const removeCart = async () => {
+  //   await AsyncStorage.removeItem('user-products');
+  // };
+
+  const handlePress = () => {
+    setAdd(prev => prev + 1);
+  };
+
+  const handlePress2 = () => {
+    if (add > 1) {
+      setAdd(prev => prev - 1);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -230,16 +307,14 @@ export default function ProductDetailsScreen({route}) {
             <TouchableOpacity
               key={index}
               style={
-                (styles.sizeBox,
-                selectedSize === size ? styles.sizeBoxFocus : styles.sizeBox)
+                selectedSize === size ? styles.sizeBoxFocus : styles.sizeBox
               }
               onPress={() => setSelectedSize(size)}>
               <Text
                 style={
-                  (styles.sizeBox,
                   selectedSize === size
                     ? styles.sizeBoxTextFocus
-                    : styles.sizeBoxText)
+                    : styles.sizeBoxText
                 }>
                 {size}
               </Text>
@@ -263,8 +338,22 @@ export default function ProductDetailsScreen({route}) {
 
       <View style={styles.priceContainer}>
         <Text style={styles.originalPrice}>Rs 3000</Text>
-        <Text style={styles.discountPrice}>Rs {product.price}</Text>
+        <Text style={styles.discountPrice}>Rs {add * product.price}</Text>
         <Text style={styles.discountTag}>50% OFF</Text>
+      </View>
+
+      <View style={styles.addView}>
+        <View style={styles.viewText}>
+          <Text style={styles.addText}>{add}</Text>
+        </View>
+        <View style={styles.buttonView}>
+          <Pressable onPress={() => handlePress()}>
+            <Text style={styles.btn1}>+</Text>
+          </Pressable>
+          <Pressable onPress={() => handlePress2()}>
+            <Text style={styles.btn2}>-</Text>
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.descriptionContainer}>
@@ -273,11 +362,13 @@ export default function ProductDetailsScreen({route}) {
       </View>
 
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.cartButton}>
-          <Text style={styles.buttonText}>Go to cart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buyButton}>
-          <Text style={styles.buttonText}>Buy Now</Text>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={async () => {
+            await addToCart();
+            navigation.navigate('CartScreen', {product: product, data: data});
+          }}>
+          <Text style={styles.buttonText}>Add To Cart</Text>
         </TouchableOpacity>
       </View>
 

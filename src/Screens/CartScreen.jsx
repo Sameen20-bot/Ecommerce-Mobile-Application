@@ -1,199 +1,229 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/self-closing-comp */
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StarRatingDisplay} from 'react-native-star-rating-widget';
-
+import {Image, ScrollView, TouchableOpacity} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
+import {Text} from 'react-native-gesture-handler';
 import {
-  Button,
-  Dimensions,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
-import {getProducts} from '../Api/getProducts';
-import {useNavigation} from '@react-navigation/native';
-import CartCard from '../Components/CartCard';
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {StarRatingDisplay} from 'react-native-star-rating-widget';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 
-const {height, width} = Dimensions.get('screen');
+const styles = StyleSheet.create({
+  navbar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    height: hp(9),
+    padding: hp(1.6),
+    borderWidth: 1,
+    borderBottomColor: 'lightgrey',
+  },
+  navtext: {
+    margin: 'auto',
+    fontSize: wp(6.2),
+    fontWeight: '500',
+  },
+  arrow: {
+    height: hp(3.7),
+    width: wp(5.3),
+  },
+  layout: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    marginTop: hp(2),
+    borderRadius: hp(2),
+    marginHorizontal: hp(1),
+    padding: hp(1),
+    elevation: 5,
+  },
+  imageLayout: {
+    width: wp(30),
+    height: hp(15),
+    resizeMode: 'contain',
+  },
+  right: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginLeft: hp(1),
+    width: '60%',
+  },
+  textLayout: {
+    flexWrap: 'wrap',
+    fontSize: hp(2.3),
+    fontWeight: '600',
+    maxWidth: '100%',
+  },
+  textPrice: {
+    textAlign: 'center',
+    fontSize: hp(2),
+    fontWeight: '800',
+    borderColor: 'lightgrey',
+    borderRadius: hp(1),
+    borderWidth: 1,
+    width: '45%',
+    marginTop: hp(1),
+    paddingTop: hp(0.5),
+    paddingBottom: hp(0.5),
+  },
+  addView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: hp(3),
+    marginHorizontal: wp(1),
+  },
+  viewText: {
+    alignItems: 'center',
+  },
+  addText: {
+    height: hp(4),
+    width: wp(11),
+    textAlign: 'center',
+    // borderColor: '#e91e63',
+    // borderWidth: hp(0.5),
+    color: 'black',
+    fontSize: hp(2.6),
+    fontWeight: '500',
+    // padding: hp(2),
+  },
+  buttonView: {
+    marginTop: hp(2),
+    marginHorizontal: wp(25),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btn: {
+    display: 'flex',
+    height: hp(3.5),
+    width: wp(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: hp(10),
+    backgroundColor: '#e91e63',
+  },
+  btnText: {
+    fontSize: hp(2.5),
+    color: 'white',
+    textAlign: 'center',
+  },
+  dustBin: {
+    marginHorizontal: wp(2),
+  },
+  checkFn: {
+    borderColor: '#F5F5F5',
+    borderTopWidth: hp(0.5),
+    backgroundColor: 'white',
+    padding: hp(2),
+    elevation: 10,
+    height: hp(18.5),
+  },
+  checkView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: wp(4),
+  },
+  checkText: {
+    fontSize: hp(3),
+    fontWeight: '400',
+  },
+  checkBtn: {
+    backgroundColor: '#e91e63',
+    padding: hp(1),
+    margin: hp(2),
+    borderRadius: hp(2),
+    alignItems: 'center',
+    flex: 1,
+  },
+  checkBtnText: {
+    color: '#fff',
+    fontWeight: '500',
+    fontSize: hp(3.0),
+  },
+});
 
-export default function CartScreen() {
+export default function CartScreen({route}) {
+  const {product, data} = route.params;
   const navigation = useNavigation();
+  const [list, setList] = useState([]);
 
-  const [data, setData] = useState([]);
-
-  const fetchDelete = async id => {
-    fetch('https://fakestoreapi.com/carts/1', {
-      method: 'DELETE',
-    })
-      .then(response => response.json())
-      .then(data => console.log(data));
+  const updatedAdd = index => {
+    const lists = [...list];
+    lists[index].quantity += 1;
+    setList(lists);
+    AsyncStorage.setItem('user-products', JSON.stringify(lists));
   };
 
-  const fetchData = async () => {
-    const res = await getProducts();
-    setData(res);
+  const updatedRemove = index => {
+    const lists = [...list];
+    if (lists[index].quantity > 1) {
+      lists[index].quantity -= 1;
+      setList(lists);
+      AsyncStorage.setItem('user-products', JSON.stringify(lists));
+    }
   };
-  console.log(data);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // For understanding:
 
-  const styles = StyleSheet.create({
-    scrollContainer: {
-      backgroundColor: '#FBFBFB',
-    },
-    layout: {
-      backgroundColor: 'white',
-      flexDirection: 'row',
-      borderRadius: 15,
-      margin: 10,
-      padding: 10,
-      elevation: 5,
-    },
-    navbar: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      height: 70,
-      padding: 13,
-      borderWidth: 1,
-      borderBottomColor: 'lightgrey',
-    },
-    navtext: {
-      margin: 'auto',
-      fontSize: 25,
-      fontWeight: '500',
-    },
-    deliveryView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      margin: 15,
-    },
-    locationIcon: {
-      height: 30,
-      width: 30,
-    },
-    locationText: {
-      fontSize: 22,
-      fontWeight: '600',
-    },
-    deliveryWidget: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      margin: 10,
-    },
-    deliveryIcon: {
-      height: 40,
-      width: 40,
-    },
-    writeIcon: {
-      height: 25,
-      width: 25,
-    },
-    addressView: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    box1: {
-      backgroundColor: 'white',
-      elevation: 10,
-      padding: 10,
-      width: '75%',
-    },
-    box2: {
-      backgroundColor: 'white',
-      elevation: 10,
-      padding: 10,
-      width: '20%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    boxBold: {
-      fontWeight: '700',
-    },
-    boxText: {
-      fontSize: 19,
-      textAlign: 'justify',
-    },
-    arrow: {
-      height: 30,
-      width: 20,
-    },
-    shoppingText: {
-      fontSize: 22,
-      fontWeight: '600',
-      margin: 15,
-    },
-    right: {
-      marginLeft: 15,
-      width: '60%',
-    },
-    imageLayout: {
-      width: 140,
-      height: 140,
-      borderRadius: 20,
-    },
-    textLayout: {
-      flexWrap: 'wrap',
-      fontSize: 19,
-      fontWeight: '600',
-      maxWidth: '100%',
-    },
-    textPrice: {
-      textAlign: 'center',
-      fontSize: 19,
-      fontWeight: '800',
-      borderColor: 'lightgrey',
-      borderRadius: 10,
-      borderWidth: 1,
-      width: '45%',
-      paddingTop: 5,
-      paddingBottom: 5,
-    },
-    starView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-      marginBottom: 10,
-      marginRight: 50,
-    },
-    starText: {
-      fontSize: 19,
-      fontWeight: '500',
-    },
-    orderLayout: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      borderColor: 'lightgrey',
-      borderTopWidth: 1,
-      marginTop: 10,
-      padding: 12,
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-  });
-  console.log(data);
-  let a;
-  if (data.length > -1) {
-    a = 1;
-  }
+  //✅ useFocusEffect:
+  // Jab screen focus hoti hai, React Navigation tumhara diya hua function ko run karta hai — lekin wo expect karta hai ke function bar-bar naya na ho, warna wo listener baar baar remove/add karega.
 
-  console.log(a);
+  // ✅ useCallback:
+  // Yeh React ko bolta hai: “Is function ko memory me hi rakh, har render pe naya mat bana.”
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const getDatas = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('user-products');
+          console.log('Product list uploaded ', jsonValue);
+
+          const parseStep = jsonValue ? JSON.parse(jsonValue) : [];
+
+          const parsed = Array.isArray(parseStep) ? parseStep : [parseStep];
+          // setImage(jsonValue);
+          setList(parsed);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      getDatas();
+    }, []),
+  );
+
+  const removeValue = async itemToRemove => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('user-products');
+      const currentList = jsonValue ? JSON.parse(jsonValue) : [];
+
+      const removeCurrentItem = currentList.filter((item, index) => {
+        return index !== itemToRemove;
+      });
+
+      await AsyncStorage.setItem(
+        'user-products',
+        JSON.stringify(removeCurrentItem),
+      );
+      setList(removeCurrentItem);
+    } catch (e) {
+      console.log('Error in deleting an item in cart ', e);
+    }
+    console.log('Done deleted sucessfully.');
+  };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.navbar}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -201,60 +231,87 @@ export default function CartScreen() {
             source={require('../../assets/leftarrow.png')}
           />
         </Pressable>
-        <Text
-          style={[
-            styles.navtext,
-            // {color: data.length > -1 ? 'green' : 'red'}
-          ]}>
-          Checkout
-        </Text>
+        <Text style={styles.navtext}>Cart</Text>
       </View>
+
       <ScrollView
-        style={styles.scrollContainer}
-        contentContainerStyle={{paddingTop: 70}}>
-        <View style={styles.deliveryView}>
-          <Image
-            source={require('../../assets/location.png')}
-            style={styles.locationIcon}
-          />
-          <Text style={styles.locationText}>Delivery Address</Text>
-        </View>
-        <View style={styles.deliveryWidget}>
-          <View style={styles.box1}>
-            <View style={styles.addressView}>
-              <Text style={[styles.boxText, styles.boxBold]}>Address:</Text>
-              <Image
-                source={require('../../assets/write.png')}
-                style={styles.writeIcon}
-              />
-            </View>
-            {/* {Platform.OS === 'ios' && ( */}
-            <Text style={styles.boxText}>
-              {Platform.OS === 'ios'
-                ? '123 Main Street, Apt 4B New York, NY 10001'
-                : 'android'}
-            </Text>
-            {/* )} */}
-          </View>
-          <View style={styles.box2}>
-            <Pressable>
-              <Image
-                source={require('../../assets/plus.png')}
-                style={styles.deliveryIcon}
-              />
-            </Pressable>
-          </View>
-        </View>
-        <Text style={styles.shoppingText}>Shopping List</Text>
-        {data.map((val, ind) => (
-          <CartCard
-            val={val}
+        contentContainerStyle={{paddingTop: hp(10), paddingBottom: hp(5)}}>
+        {list.map((val, ind) => (
+          <TouchableOpacity
+            style={styles.layout}
             key={ind}
-            fetchDelete={fetchDelete}
-            layout={styles.layout}
-          />
+            onPress={() =>
+              navigation.navigate('ProductDetailsScreen', {
+                product: product,
+                data: data,
+              })
+            }>
+            <View>
+              <Image source={{uri: val.image}} style={styles.imageLayout} />
+            </View>
+            <View style={styles.right}>
+              <View style={styles.textView}>
+                <Text style={styles.textLayout} numberOfLines={2}>
+                  {val.title}
+                </Text>
+                <Text style={styles.textPrice}>
+                  Rs {val.quantity * val.price}
+                </Text>
+              </View>
+
+              <View style={styles.addView}>
+                <View style={styles.buttonView}>
+                  <Pressable
+                    onPress={() => removeValue(ind)}
+                    style={styles.dustBin}>
+                    <Icons name="delete" size={32} color="#e91e63" />
+                  </Pressable>
+                  <Pressable
+                    style={styles.btn}
+                    onPress={() => {
+                      updatedAdd(ind);
+                    }}>
+                    <Text style={styles.btnText}>+</Text>
+                  </Pressable>
+                  <View style={styles.viewText}>
+                    <Text style={styles.addText}>{val.quantity}</Text>
+                  </View>
+                  <Pressable
+                    style={styles.btn}
+                    onPress={() => {
+                      updatedRemove(ind);
+                    }}>
+                    <Text style={styles.btnText}>-</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
+      <View style={styles.checkFn}>
+        <View style={styles.checkView}>
+          <Text style={styles.checkText}>Total</Text>
+          <Text style={styles.checkText}>
+            Rs{' '}
+            {list
+              .reduce((acc, item) => {
+                return acc + item.quantity * item.price;
+              }, 0)
+              .toFixed(2)}
+          </Text>
+        </View>
+        <Pressable
+          style={styles.checkBtn}
+          onPress={() =>
+            navigation.navigate('CheckOutScreen', {
+              product: product,
+              data: data,
+            })
+          }>
+          <Text style={styles.checkBtnText}>Checkout</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }

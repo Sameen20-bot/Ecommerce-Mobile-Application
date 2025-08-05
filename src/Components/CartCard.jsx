@@ -4,7 +4,7 @@ import {StarRatingDisplay} from 'react-native-star-rating-widget';
 
 const CartCard = ({val, fetchDelete, layout}) => {
   return (
-    <TouchableOpacity onPress={() => fetchDelete(val.id)} style={layout}>
+    <TouchableOpacity style={layout}>
       <View>
         <Image source={{uri: val.image}} style={styles.imageLayout} />
       </View>

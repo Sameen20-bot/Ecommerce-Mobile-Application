@@ -35,6 +35,7 @@ import AnimationScreen3 from './src/AnimationsPractice/AnimationScreen3';
 import AnimationScreen4 from './src/AnimationsPractice/AnimationScreen4';
 import AnimationScreen5 from './src/AnimationsPractice/AnimationScreen5';
 import AnimationScreen6 from './src/AnimationsPractice/AnimationScreen6';
+import CheckOutScreen from './src/Screens/CheckOutScreen';
 
 // import UserScreen from './src/Screens/UserScreen';
 // import ProductsScreen from './src/Screens/ProductsScreen';
@@ -180,7 +181,7 @@ function DrawerNavigator() {
       />
       <Drawer.Screen
         name="Gift Cards"
-        component={AnimationScreen6} 
+        component={AnimationScreen6}
         options={{
           drawerIcon: ({focused}) => {
             return (
@@ -301,6 +302,8 @@ function App(): React.JSX.Element {
             name="ProductDetailsScreen"
             component={ProductDetailsScreen}
           />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
+          <Stack.Screen name="CheckOutScreen" component={CheckOutScreen} />
           {/* Add other screens here if needed */}
         </Stack.Navigator>
       </NavigationContainer>
