@@ -294,6 +294,13 @@ export default function ProductDetailsScreen({route}) {
     }
   };
 
+  const handleCartData = async () => {
+    await addToCart();
+    await AsyncStorage.setItem('product', JSON.stringify(product));
+    await AsyncStorage.setItem('data', JSON.stringify(data));
+    navigation.navigate('CartScreen');
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -362,12 +369,7 @@ export default function ProductDetailsScreen({route}) {
       </View>
 
       <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={styles.buyButton}
-          onPress={async () => {
-            await addToCart();
-            navigation.navigate('CartScreen', {product: product, data: data});
-          }}>
+        <TouchableOpacity style={styles.buyButton} onPress={handleCartData}>
           <Text style={styles.buttonText}>Add To Cart</Text>
         </TouchableOpacity>
       </View>

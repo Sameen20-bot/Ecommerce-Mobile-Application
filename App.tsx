@@ -29,13 +29,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
-import AnimationScreen from './src/Screens/AnimationScreen';
-import AnimationScreen2 from './src/AnimationsPractice/AnimationScreen2';
-import AnimationScreen3 from './src/AnimationsPractice/AnimationScreen3';
-import AnimationScreen4 from './src/AnimationsPractice/AnimationScreen4';
-import AnimationScreen5 from './src/AnimationsPractice/AnimationScreen5';
-import AnimationScreen6 from './src/AnimationsPractice/AnimationScreen6';
 import CheckOutScreen from './src/Screens/CheckOutScreen';
+import AnimationScreen6 from './src/AnimationsPractice/AnimationScreen6';
 
 // import UserScreen from './src/Screens/UserScreen';
 // import ProductsScreen from './src/Screens/ProductsScreen';

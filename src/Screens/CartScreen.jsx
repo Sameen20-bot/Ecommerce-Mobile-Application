@@ -153,10 +153,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function CartScreen({route}) {
-  const {product, data} = route.params;
+export default function CartScreen() {
+  // const {product, data} = route.params;
   const navigation = useNavigation();
   const [list, setList] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [data, setData] = useState([]);
 
   const updatedAdd = index => {
     const lists = [...list];
@@ -173,6 +175,17 @@ export default function CartScreen({route}) {
       AsyncStorage.setItem('user-products', JSON.stringify(lists));
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const prod = await AsyncStorage.getItem('product');
+      const dat = await AsyncStorage.getItem('data');
+
+      setProduct(JSON.parse(prod));
+      setData(JSON.parse(dat));
+    };
+    fetchData();
+  }, []);
 
   // For understanding:
 
@@ -305,8 +318,7 @@ export default function CartScreen({route}) {
           style={styles.checkBtn}
           onPress={() =>
             navigation.navigate('CheckOutScreen', {
-              product: product,
-              data: data,
+              lists: list,
             })
           }>
           <Text style={styles.checkBtnText}>Checkout</Text>
