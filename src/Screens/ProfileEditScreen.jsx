@@ -180,7 +180,7 @@ export default function ProfileEditScreen() {
         setImage(userImg);
         // const storeData = async value => {
         try {
-          const jsonValue = JSON.stringify(data);
+          const jsonValue = JSON.stringify(userImg);
           await AsyncStorage.setItem('gallery-image', jsonValue);
         } catch (e) {
           console.log(e);
@@ -212,10 +212,19 @@ export default function ProfileEditScreen() {
 
   const getDatas = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('user-image');
-      console.log('image uploaded ', jsonValue);
-      // setImage(jsonValue);
-      return setImage(jsonValue != null ? JSON.parse(jsonValue) : null);
+      // Check camera image first
+      const cameraValue = await AsyncStorage.getItem('camera-image');
+      const galleryValue = await AsyncStorage.getItem('gallery-image');
+
+      if (cameraValue) {
+        setImage(JSON.parse(cameraValue));
+        console.log('Loaded from camera');
+      } else if (galleryValue) {
+        setImage(JSON.parse(galleryValue));
+        console.log('Loaded from gallery');
+      } else {
+        setImage(null);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -226,65 +235,71 @@ export default function ProfileEditScreen() {
   }, []);
 
   return (
-    <ImageBackground
-      source={require('../../assets/profileBack.jpg')}
-      style={styles.imageBack}>
-      <View style={styles.profileContainer}>
-        <Image source={{uri: image?.uri}} style={styles.profile} />
-        <TouchableOpacity
-          onPress={() => setModalVisible(!modalVisible)}
-          style={styles.iconContainer}>
-          <Icon name="edit" size={20} color="white" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.profileBlock}>
-        <Text style={styles.profileText}>Edit Profile</Text>
-        <View>
-          <View>
-            <Text style={styles.labelText}>First Name</Text>
-            <TextInput
-              placeholder="Enter first name"
-              style={styles.profileInput}
-              value={data.name}
-              onChangeText={text => handleInput('name', text)}
-            />
-          </View>
-          <View>
-            <Text style={styles.labelText}>Last Name</Text>
-            <TextInput
-              placeholder="Enter last name"
-              style={styles.profileInput}
-              value={data.lastname}
-              onChangeText={text => handleInput('lastname', text)}
-            />
-          </View>
-          <View>
-            <Text style={styles.labelText}>Username</Text>
-            <TextInput
-              placeholder="Enter username"
-              style={styles.profileInput}
-              value={data.username}
-              onChangeText={text => handleInput('username', text)}
-            />
-          </View>
-          <View>
-            <Text style={styles.labelText}>Email</Text>
-            <TextInput
-              placeholder="Enter your email"
-              style={styles.profileInput}
-              value={data.email}
-              onChangeText={text => handleInput('email', text)}
-            />
-          </View>
-          <Pressable style={styles.updateButton} onPress={() => submit()}>
-            <Text style={styles.updateText}>Profile Update</Text>
-          </Pressable>
+    <ScrollView>
+      <ImageBackground
+        source={require('../../assets/profileBack.jpg')}
+        style={styles.imageBack}>
+        <View style={styles.profileContainer}>
+          <Image source={{uri: image?.uri}} style={styles.profile} />
+          <TouchableOpacity
+            onPress={() => setModalVisible(!modalVisible)}
+            style={styles.iconContainer}>
+            <Icon name="edit" size={20} color="white" />
+          </TouchableOpacity>
         </View>
-      </View>
-      <ModalsProfile
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-    </ImageBackground>
+        <View style={styles.profileBlock}>
+          <Text style={styles.profileText}>Edit Profile</Text>
+          <View>
+            <View>
+              <Text style={styles.labelText}>First Name</Text>
+              <TextInput
+                placeholder="Enter first name"
+                placeholderTextColor="#7A7A73"
+                style={styles.profileInput}
+                value={data.name}
+                onChangeText={text => handleInput('name', text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.labelText}>Last Name</Text>
+              <TextInput
+                placeholder="Enter last name"
+                placeholderTextColor="#7A7A73"
+                style={styles.profileInput}
+                value={data.lastname}
+                onChangeText={text => handleInput('lastname', text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.labelText}>Username</Text>
+              <TextInput
+                placeholder="Enter username"
+                placeholderTextColor="#7A7A73"
+                style={styles.profileInput}
+                value={data.username}
+                onChangeText={text => handleInput('username', text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.labelText}>Email</Text>
+              <TextInput
+                placeholder="Enter your email"
+                placeholderTextColor="#7A7A73"
+                style={styles.profileInput}
+                value={data.email}
+                onChangeText={text => handleInput('email', text)}
+              />
+            </View>
+            <Pressable style={styles.updateButton} onPress={() => submit()}>
+              <Text style={styles.updateText}>Profile Update</Text>
+            </Pressable>
+          </View>
+        </View>
+        <ModalsProfile
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+      </ImageBackground>
+    </ScrollView>
   );
 }

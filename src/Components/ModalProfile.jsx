@@ -11,75 +11,45 @@ import {
 const ModalsProfile = ({modalVisible, setModalVisible}) => {
   const [image, setImage] = useState();
   const selectImages = type => {
+    const options = {
+      quality: 1,
+    };
+
     if (type === 'camera') {
-      const options = {
-        quality: 1,
-      };
       launchCamera(options, async response => {
-        console.log('launch camera', response);
-        if (response.didCancel) {
-          return;
-        }
-        if (response.errorCode) {
-          return;
-        }
+        if (response.didCancel || response.errorCode) return;
 
         const asset = response.assets?.[0];
-        // if (asset && Utils.validateImage(asset)) {
         const data = {
           fileName: asset.fileName,
           uri: asset.uri,
           type: asset.type,
         };
-        console.log(data);
-        // setImage(data);
-        // const storeData = async value => {
         try {
           const jsonValue = JSON.stringify(data);
-          await AsyncStorage.setItem('user-image', jsonValue);
+          await AsyncStorage.setItem('camera-image', jsonValue);
+          console.log('Camera image saved:', jsonValue);
         } catch (e) {
           console.log(e);
-          // saving error
         }
-        // };
-        // setImage(prev => [...prev, data]);
-        // }
       });
     } else {
-      // view gallery task h.w
-      //   const selectImages = type => {
-      // if (type === 'camera') {
-      const options = {
-        quality: 1,
-      };
       launchImageLibrary(options, async response => {
-        if (response.didCancel) {
-          return;
-        }
-        if (response.errorCode) {
-          return;
-        }
+        if (response.didCancel || response.errorCode) return;
 
         const asset = response.assets?.[0];
-        // if (asset && Utils.validateImage(asset)) {
         const data = {
           fileName: asset.fileName,
           uri: asset.uri,
           type: asset.type,
         };
-        console.log(data);
-        // setImage(data);
-        // const storeData = async value => {
         try {
           const jsonValue = JSON.stringify(data);
           await AsyncStorage.setItem('gallery-image', jsonValue);
+          console.log('Gallery image saved:', jsonValue);
         } catch (e) {
           console.log(e);
-          // saving error
         }
-        // };
-        // setImage(prev => [...prev, data]);
-        // }
       });
     }
   };
@@ -99,13 +69,13 @@ const ModalsProfile = ({modalVisible, setModalVisible}) => {
         <View style={styles.modalView}>
           <View style={styles.uploadBox}>
             <Pressable
-              style={styles.btn}
+              style={styles.btn1}
               onPress={() => selectImages('camera')}>
               <Text style={styles.btnText}> Open Camera</Text>
             </Pressable>
 
             <Pressable
-              style={styles.btn}
+              style={styles.btn2}
               onPress={() => selectImages('gallery')}>
               <Text style={styles.btnText}> View Gallery</Text>
             </Pressable>
@@ -122,9 +92,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btn: {
-    backgroundColor: 'blue',
-    padding: wp(5),
+  btn1: {
+    backgroundColor: '#465C88',
+    padding: wp(3),
+    borderRadius: wp(5),
+    margin: wp(5),
+  },
+  btn2: {
+    backgroundColor: '#D7D7D7',
+    padding: wp(3),
     borderRadius: wp(5),
     margin: wp(5),
   },
@@ -134,11 +110,13 @@ const styles = StyleSheet.create({
     fontSize: hp(3),
   },
   uploadBox: {
-    borderStyle: 'dotted',
+    elevation: 10,
+    // borderStyle: 'dotted',
     borderColor: 'lightgrey',
     borderRadius: wp(5),
-    borderWidth: wp(1),
+    // borderWidth: wp(1),
     width: wp(80),
+    backgroundColor: 'white',
     alignSelf: 'center',
     marginTop: hp(5),
   },

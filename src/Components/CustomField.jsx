@@ -38,14 +38,20 @@ export default function CustomField({
   placeholder,
   multiline,
   numberOfLines,
+  style,
 }) {
   return (
     <TextInput
       placeholder={placeholder}
+      placeholderTextColor="#7A7A73"
       multiline={multiline}
       numberOfLines={numberOfLines}
       value={value}
-      style={[multiline ? styles.textArea : styles.input, styles.nameMargin]}
+      style={[
+        multiline ? styles.textArea : styles.input,
+        styles.nameMargin,
+        style,
+      ]}
       onChangeText={onChangeText}
     />
   );

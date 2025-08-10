@@ -96,16 +96,19 @@ export default function ContactUsScreen() {
         </Text>
         <CustomField
           placeholder="Full name"
+          placeholderTextColor="#7A7A73"
           value={data.name}
           onChangeText={text => handleInput('name', text)}
         />
         <CustomField
           placeholder="Your mail"
+          placeholderTextColor="#7A7A73"
           value={data.email}
           onChangeText={text => handleInput('email', text)}
         />
         <CustomField
           placeholder="Message"
+          placeholderTextColor="#7A7A73"
           multiline={true}
           numberOfLines={5}
           value={data.message}

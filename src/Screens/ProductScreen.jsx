@@ -65,45 +65,45 @@ export default function UserScreen() {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: 10,
+      paddingHorizontal: wp(2.5),
     },
     iconStyle: {
       backgroundColor: '#EEEEEE',
-      borderRadius: 50,
+      borderRadius: wp(50),
       alignItems: 'center',
       justifyContent: 'center',
-      marginLeft: 10,
-      marginTop: 10,
-      height: 50,
-      width: 50,
+      marginLeft: wp(2.5),
+      marginTop: hp(1),
+      height: hp(6),
+      width: wp(12),
       textAlign: 'center',
-      paddingTop: 10,
+      paddingTop: hp(1.5),
     },
     userStyle: {
       height: hp(8),
       width: wp(15),
       resizeMode: 'cover',
-      marginRight: 10,
-      marginTop: 10,
+      marginRight: wp(2.5),
+      marginTop: hp(1),
       borderRadius: wp(50),
       overflow: 'hidden',
     },
     searchStyle: {
       flex: 1,
       flexDirection: 'row',
-      marginTop: 40,
+      marginTop: hp(5),
       margin: 'auto',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'white',
-      width: '90%',
-      height: 50,
-      borderRadius: 15,
-      paddingLeft: 12,
-      paddingRight: 12,
+      width: wp(90),
+      height: hp(6),
+      borderRadius: wp(3.75),
+      paddingLeft: wp(3),
+      paddingRight: wp(3),
     },
     searchText: {
-      fontSize: 19,
+      fontSize: hp(2.4),
     },
     searchBox: {
       flexDirection: 'row',
@@ -114,8 +114,8 @@ export default function UserScreen() {
       justifyContent: 'space-between',
     },
     allFeatureText: {
-      margin: 20,
-      fontSize: 23,
+      margin: wp(5),
+      fontSize: hp(2.9),
       fontWeight: '600',
     },
     allFeatureWidget2: {
@@ -127,50 +127,51 @@ export default function UserScreen() {
       backgroundColor: 'white',
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 10,
-      marginRight: 10,
+      padding: wp(2.5),
+      marginRight: wp(2.5),
     },
     featureText: {
-      fontSize: 19,
+      fontSize: hp(2.4),
     },
     featureWidget: {
       flexDirection: 'row',
       backgroundColor: 'white',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      borderRadius: 15,
-      padding: 10,
+      borderRadius: wp(3.75),
+      padding: wp(2.5),
     },
     featureImageView: {
       alignItems: 'center',
     },
     featureImageViewLast: {
-      marginRight: 10,
+      marginRight: wp(2.5),
     },
     featureImage: {
-      height: 70,
-      width: 70,
-      margin: 12,
-      borderRadius: 50,
+      height: hp(8.75),
+      width: wp(17.5),
+      margin: hp(1.5),
+      borderRadius: wp(50),
     },
     featureTexts: {
-      fontSize: 16,
+      fontSize: hp(2),
     },
     saleImage: {
-      marginTop: 20,
-      width: '90%',
-      height: 200,
+      marginTop: hp(2.5),
+      width: wp(90),
+      height: hp(25),
       margin: 'auto',
-      borderRadius: 15,
+      borderRadius: wp(3.75),
     },
     dealWidget: {
       flexDirection: 'row',
       backgroundColor: '#4392F9',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      borderRadius: 15,
-      padding: 12,
-      marginTop: 20,
+      borderRadius: wp(3.75),
+      padding: wp(3),
+      gap: wp(3),
+      marginTop: hp(2.5),
       justifyContent: 'space-between',
     },
     dealColor: {
@@ -180,130 +181,130 @@ export default function UserScreen() {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: 10,
+      paddingTop: hp(1.25),
     },
     dealBox2: {
       flexDirection: 'row',
       margin: 'auto',
-      borderRadius: 10,
+      borderRadius: wp(2.5),
       borderColor: 'white',
       borderWidth: 1,
-      padding: 10,
+      padding: wp(2.5),
     },
     dealText: {
-      fontSize: 25,
+      fontSize: hp(3.1),
     },
     dealText2: {
-      fontSize: 19,
+      fontSize: hp(2.2),
     },
     productSlide: {
       flexDirection: 'row',
-      marginTop: 30,
-      width: '90%',
+      marginTop: hp(3.75),
+      width: wp(90),
       margin: 'auto',
     },
-
     starView: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: 10,
-      marginBottom: 10,
-      marginRight: 50,
-      paddingLeft: 10,
+      marginTop: hp(1.25),
+      marginBottom: hp(1.25),
+      marginRight: wp(12.5),
+      paddingLeft: wp(2.5),
     },
     specialOffer: {
       flexDirection: 'row',
       backgroundColor: 'white',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      borderRadius: 15,
-      padding: 12,
-      marginTop: 10,
+      borderRadius: wp(3.75),
+      padding: wp(3),
+      marginTop: hp(1.25),
       elevation: 5,
     },
     specialOfferImage: {
-      height: 80,
-      width: 80,
+      height: hp(10),
+      width: wp(20),
     },
     specialOfferText: {
-      fontSize: 15,
-      width: 200,
-      marginLeft: 15,
+      fontSize: hp(1.9),
+      width: wp(50),
+      marginLeft: wp(3.75),
     },
     specialOfferText2: {
-      fontSize: 19,
-      width: 200,
-      marginLeft: 15,
+      fontSize: hp(2.4),
+      width: wp(50),
+      marginLeft: wp(3.75),
     },
     trendWidget: {
       flexDirection: 'row',
       backgroundColor: '#FD6E86',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      borderRadius: 15,
-      padding: 10,
-      marginTop: 20,
+      borderRadius: wp(3.75),
+      padding: wp(2.5),
+      marginTop: hp(2.5),
       justifyContent: 'space-between',
     },
     saleBox2: {
       backgroundColor: 'white',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      borderRadius: 15,
+      borderRadius: wp(3.75),
       elevation: 5,
-      marginTop: 10,
+      marginTop: hp(1.25),
     },
     saleImage2: {
       width: '100%',
-      height: 200,
+      height: hp(25),
       margin: 'auto',
-      borderRadius: 15,
+      borderRadius: wp(3.75),
     },
     sale2View: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: '90%',
+      width: wp(90),
       margin: 'auto',
-      paddingTop: 10,
-      paddingBottom: 10,
+      paddingHorizontal: wp(3),
+      paddingTop: hp(1.25),
+      paddingBottom: hp(1.25),
     },
     saleText: {
-      fontSize: 24,
+      fontSize: hp(3),
     },
     saleText2: {
-      fontSize: 19,
+      fontSize: hp(2.4),
     },
     saleButton: {
       backgroundColor: '#F83758',
-      padding: 7,
-      borderRadius: 10,
+      padding: wp(1.75),
+      borderRadius: wp(2.5),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
       margin: 'auto',
     },
     saleFont: {
-      fontSize: 17,
+      fontSize: hp(2.1),
       color: 'white',
     },
     sponsor: {
       flexDirection: 'column',
       alignItems: 'flex-start',
-      marginTop: 15,
-      width: '90%',
-      borderRadius: 10,
+      marginTop: hp(1.875),
+      width: wp(90),
+      borderRadius: wp(2.5),
       margin: 'auto',
-      paddingTop: 10,
-      paddingBottom: 10,
-      padding: 10,
+      paddingTop: hp(1.25),
+      paddingBottom: hp(1.25),
+      padding: wp(2.5),
       backgroundColor: 'white',
       elevation: 5,
-      marginBottom: 10,
+      marginBottom: hp(1.25),
     },
     sponsorImage: {
       margin: 'auto',
-      borderRadius: 10,
+      borderRadius: wp(2.5),
     },
     sponsor2: {
       flexDirection: 'row',
@@ -313,14 +314,14 @@ export default function UserScreen() {
       alignContent: 'space-between',
     },
     sponsorText: {
-      fontSize: 19,
+      fontSize: hp(2.4),
       fontWeight: 'bold',
-      marginTop: 7,
+      marginTop: hp(0.875),
     },
     sponsorText2: {
-      fontSize: 23,
+      fontSize: hp(2.9),
       fontWeight: '500',
-      marginBottom: 7,
+      marginBottom: hp(0.875),
     },
   });
 
@@ -378,10 +379,19 @@ export default function UserScreen() {
   };
   const getDatas = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('user-image');
-      console.log('image uploaded ', jsonValue);
-      // setImage(jsonValue);
-      return setImage(jsonValue != null ? JSON.parse(jsonValue) : null);
+      // Check camera image first
+      const cameraValue = await AsyncStorage.getItem('camera-image');
+      const galleryValue = await AsyncStorage.getItem('gallery-image');
+
+      if (cameraValue) {
+        setImage(JSON.parse(cameraValue));
+        console.log('Loaded from camera');
+      } else if (galleryValue) {
+        setImage(JSON.parse(galleryValue));
+        console.log('Loaded from gallery');
+      } else {
+        setImage(null);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -416,6 +426,7 @@ export default function UserScreen() {
           <Icons name="search" size={30} />
           <TextInput
             placeholder="Search any Product"
+            placeholderTextColor="#7A7A73"
             value={search.name}
             onChangeText={text => handleInput('name', text)}
             style={styles.searchText}
@@ -428,7 +439,7 @@ export default function UserScreen() {
 
       <View style={styles.allFeatureWidget}>
         <Text style={styles.allFeatureText}>All Featured</Text>
-        <View style={styles.allFeatureWidget2}>
+        {/* <View style={styles.allFeatureWidget2}>
           <Pressable>
             <View style={styles.feature}>
               <Text style={styles.featureText}>Sort</Text>
@@ -441,7 +452,7 @@ export default function UserScreen() {
               <Icons name="filter-alt" size={30} />
             </View>
           </Pressable>
-        </View>
+        </View> */}
       </View>
 
       <ScrollView style={styles.featureWidget} horizontal={true}>

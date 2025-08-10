@@ -82,6 +82,12 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgrey',
     borderBottomWidth: wp(0.5),
   },
+  pressableSettingsLast: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: hp(4),
+    paddingBottom: hp(1),
+  },
   pressableSettingsText: {
     color: 'grey',
     marginLeft: wp(3),
@@ -97,15 +103,23 @@ export default function SettingScreen() {
 
   const getDatas = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('user-image');
-      console.log('image uploaded ', jsonValue);
-      // setImage(jsonValue);
-      return setImage(jsonValue != null ? JSON.parse(jsonValue) : null);
+      // Check camera image first here is the code for image one 
+      const cameraValue = await AsyncStorage.getItem('camera-image');
+      const galleryValue = await AsyncStorage.getItem('gallery-image');
+
+      if (cameraValue) {
+        setImage(JSON.parse(cameraValue));
+        console.log('Loaded from camera');
+      } else if (galleryValue) {
+        setImage(JSON.parse(galleryValue));
+        console.log('Loaded from gallery');
+      } else {
+        setImage(null);
+      }
     } catch (e) {
       console.log(e);
     }
   };
-
   useEffect(() => {
     getDatas();
   }, []);
@@ -137,12 +151,12 @@ export default function SettingScreen() {
         <Text style={styles.profileUserText}>Sameen Zaki</Text>
       </View>
       <View style={styles.scrollSettings}>
-        <Pressable
+        {/* <Pressable
           style={styles.pressableSettings}
           onPress={() => navigation.navigate('UploadScreen')}>
           <Icons name="camera" size={30} color="purple" />
           <Text style={styles.pressableSettingsText}>Upload Picture</Text>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable
           style={styles.pressableSettings}
@@ -157,13 +171,18 @@ export default function SettingScreen() {
         </Pressable>
 
         <Pressable style={styles.pressableSettings}>
-          <Icons name="shopping-cart" size={30} color="green" />
-          <Text style={styles.pressableSettingsText}>Past Orders</Text>
+          <Icons name="card-giftcard" size={30} color="#f83758" />
+          <Text style={styles.pressableSettingsText}>Gift Cards</Text>
         </Pressable>
 
         <Pressable style={styles.pressableSettings}>
-          <Icons name="help" size={30} color="blue" />
-          <Text style={styles.pressableSettingsText}>Help Center</Text>
+          <Icons name="privacy-tip" size={30} color="green" />
+          <Text style={styles.pressableSettingsText}>Privacy Policy</Text>
+        </Pressable>
+
+        <Pressable style={styles.pressableSettingsLast}>
+          <Icons name="logout" size={30} color="blue" />
+          <Text style={styles.pressableSettingsText}>Log Out</Text>
         </Pressable>
       </View>
     </View>
