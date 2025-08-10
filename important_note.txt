@@ -1,0 +1,11 @@
+Important Note:
+please do not add your real card details, because I have used this
+just to show the payment logic, also no backend server is used
+so please be careful
+
+
+THANKYOU THIS IS MY FIRST REACT NATIVE PROJECT HOPE YOU LIKE IT 
+
+part 2 will be upload in which I will add animation, theme change,
+as well as more improvements and update like login and logout but it 
+will take time thank you
