@@ -31,6 +31,7 @@ import {
 import ProductDetailsScreen from './src/Screens/ProductDetailsScreen';
 import CheckOutScreen from './src/Screens/CheckOutScreen';
 import AnimationScreen6 from './src/AnimationsPractice/AnimationScreen6';
+import PrivacyScreen from './src/Screens/PrivacyScreen';
 
 // import UserScreen from './src/Screens/UserScreen';
 // import ProductsScreen from './src/Screens/ProductsScreen';
@@ -299,6 +300,7 @@ function App(): React.JSX.Element {
           />
           <Stack.Screen name="CartScreen" component={CartScreen} />
           <Stack.Screen name="CheckOutScreen" component={CheckOutScreen} />
+          <Stack.Screen name="PrivacyScreen" component={PrivacyScreen} />
           {/* Add other screens here if needed */}
         </Stack.Navigator>
       </NavigationContainer>

@@ -103,7 +103,7 @@ export default function SettingScreen() {
 
   const getDatas = async () => {
     try {
-      // Check camera image first here is the code for image one 
+      // Check camera image first here is the code for image one
       const cameraValue = await AsyncStorage.getItem('camera-image');
       const galleryValue = await AsyncStorage.getItem('gallery-image');
 
@@ -175,7 +175,9 @@ export default function SettingScreen() {
           <Text style={styles.pressableSettingsText}>Gift Cards</Text>
         </Pressable>
 
-        <Pressable style={styles.pressableSettings}>
+        <Pressable
+          style={styles.pressableSettings}
+          onPress={() => navigation.navigate('PrivacyScreen')}>
           <Icons name="privacy-tip" size={30} color="green" />
           <Text style={styles.pressableSettingsText}>Privacy Policy</Text>
         </Pressable>
